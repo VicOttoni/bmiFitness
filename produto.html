@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Produto | BMI Fitness</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon/favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <a href="index.html" class="logo">
+            BMI<span>Fitness</span>
+        </a>
+
+        <nav class="navbar">
+
+            <a href="index.html#inicio">
+                Início
+            </a>
+
+            <a href="index.html#produtos">
+                Produtos
+            </a>
+
+            <a href="index.html#contato">
+                Contato
+            </a>
+
+        </nav>
+
+        <button
+            class="menu-button"
+            id="menu-button"
+            aria-label="Abrir menu"
+        >
+            ☰
+        </button>
+
+        <button id="cart-button" class="cart-button">
+
+            🛍️
+
+            <span id="cart-count">
+                0
+            </span>
+
+        </button>
+
+    </header>
+
+
+    <!-- CONTEÚDO DO PRODUTO -->
+
+    <main>
+
+        <section class="product-page" id="product-page">
+
+            <!-- JavaScript vai colocar o produto aqui -->
+
+        </section>
+
+    </main>
+
+
+    <!-- CARRINHO LATERAL -->
+
+    <div class="cart-overlay" id="cart-overlay"></div>
+    
+    <div class="cart-sidebar" id="cart-sidebar">
+
+        <div class="cart-header">
+
+            <h2>
+                Seu carrinho
+            </h2>
+
+            <button id="close-cart">
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="cart-items" id="cart-items">
+
+            <p>
+                Seu carrinho está vazio.
+            </p>
+
+        </div>
+
+
+        <div class="cart-footer">
+
+            <h3>
+
+                Total:
+
+                <span id="cart-total">
+                    R$ 0,00
+                </span>
+
+            </h3>
+
+
+            <button class="checkout-button">
+
+                Finalizar compra
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script type="module" src="./script.js"></script>
+
+</body>
+
+</html>

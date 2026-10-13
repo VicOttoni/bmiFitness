@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>BMI Fitness</title>
+        <link rel="stylesheet" href="./style.css" />
+        <script type="module" src="./script.js"></script>
+
+        <link rel="icon" type="image/x-icon" href="images/favicon/favicon.ico">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <header class="header">
+
+            <a href="#inicio" class="logo">
+                BMI <span>Fitness</span>
+            </a>
+
+
+            <nav class="navbar">
+
+                <a href="#inicio">Início</a>
+
+                <a href="#produtos">Produtos</a>
+
+                <a href="#contato">Contato</a>
+
+            </nav>
+
+
+            <button
+                class="menu-button"
+                id="menu-button"
+                aria-label="Abrir menu"
+            >
+                ☰
+            </button>
+            
+
+            <button id="cart-button" class="cart-button">
+
+                🛍️
+
+                <span id="cart-count">
+                    0
+                </span>
+
+            </button>
+
+        </header>
+
+        <main>
+            <section class="hero" id="inicio">
+
+                <div class="hero-content">
+
+                    <span>NOVA COLEÇÃO</span>
+
+                    <h1>Vista seu estilo.</h1>
+
+                    <p>
+                        Peças feitas para quem gosta de se destacar.
+                    </p>
+
+                    <a href="#produtos" class="hero-button">
+                        Comprar agora
+                    </a>
+
+                </div>
+
+
+                <div class="hero-image">
+
+                    <img src="/images/conjuntoLeggingAzul/conLegA2.jpg">
+
+                </div>
+
+            </section>
+
+            <section class="products" id="produtos">
+                <div class="section-title">
+                    <p>DESTAQUES</p>
+                    <h2>Nossos produtos</h2>
+                </div>
+
+                <div class="products-grid" id="product-grid"></div>
+            </section>
+        </main>
+
+          <div class="cart-overlay" id="cart-overlay"></div>
+
+        <div class="cart-sidebar" id="cart-sidebar">
+            <div class="cart-header">
+                <h2>Seu carrinho</h2>
+
+                <button id="close-cart">×</button>
+            </div>
+
+            <div class="cart-items" id="cart-items">
+                <p>Seu carrinho está vazio.</p>
+            </div>
+
+            <div class="cart-footer">
+                <h3>
+                    Total:
+                    <span id="cart-total">R$ 0,00</span>
+                </h3>
+
+                <button class="checkout-button">Finalizar compra</button>
+            </div>
+        </div>
+
+        <section class="contact" id="contato">
+
+            <div class="contact-content">
+
+                <span class="contact-subtitle">
+                    ATENDIMENTO PERSONALIZADO
+                </span>
+
+                <h2>
+                    Precisa de ajuda para escolher<br>
+                    seu look perfeito?
+                </h2>
+
+                <p>
+                    Tire suas dúvidas, consulte tamanhos e faça seu pedido
+                    diretamente pelo nosso WhatsApp.
+                </p>
+
+                <a
+                    href="https://wa.me/5531998649461"
+                    target="_blank"
+                    class="whatsapp-button"
+                >
+                    <span class="whatsapp-icon">💬</span>
+
+                    Falar no WhatsApp
+                </a>
+
+                <span class="contact-small">
+                    Respondemos o mais rápido possível ✨
+                </span>
+
+            </div>
+
+        </section>
+    </body>
+</html>
