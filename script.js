@@ -6,73 +6,98 @@
 // =====================================
 
 
+
 function animateProductToCart(sourceImage) {
     const cartButton = document.getElementById("cart-button");
 
     if (!sourceImage || !cartButton) return;
 
-    const imageRect = sourceImage.getBoundingClientRect();
-    const cartRect = cartButton.getBoundingClientRect();
+    const start = sourceImage.getBoundingClientRect();
+    const target = cartButton.getBoundingClientRect();
 
-    const flyingImage = sourceImage.cloneNode(true);
+    if (!start.width || !start.height ||
+        !target.width || !target.height) {
+        return;
+    }
 
-    flyingImage.style.position = "fixed";
-    flyingImage.style.left = `${imageRect.left}px`;
-    flyingImage.style.top = `${imageRect.top}px`;
-    flyingImage.style.width = `${imageRect.width}px`;
-    flyingImage.style.height = `${imageRect.height}px`;
-    flyingImage.style.objectFit = "cover";
-    flyingImage.style.margin = "0";
-    flyingImage.style.zIndex = "99999";
-    flyingImage.style.pointerEvents = "none";
-    flyingImage.style.borderRadius = "8px";
-    flyingImage.style.transformOrigin = "center center";
+    // Cria uma cópia visual da roupa, sem duplicar seu ID.
+    const flyingImage = document.createElement("img");
+
+    flyingImage.src = sourceImage.currentSrc || sourceImage.src;
+    flyingImage.alt = "";
+
+    Object.assign(flyingImage.style, {
+        position: "fixed",
+        left: `${start.left}px`,
+        top: `${start.top}px`,
+        width: `${start.width}px`,
+        height: `${start.height}px`,
+        maxWidth: "none",
+        objectFit: getComputedStyle(sourceImage).objectFit || "cover",
+        margin: "0",
+        padding: "0",
+        border: "0",
+        borderRadius: "10px",
+        boxShadow: "0 8px 24px rgba(0,0,0,0.16)",
+        zIndex: "99999",
+        pointerEvents: "none",
+        transformOrigin: "center center",
+        willChange: "transform, opacity"
+    });
 
     document.body.appendChild(flyingImage);
 
-    const x = cartRect.left + cartRect.width / 2
-        - (imageRect.left + imageRect.width / 2);
+    // Calcula a distância usando as posições reais na tela.
+    const startCenterX = start.left + start.width / 2;
+    const startCenterY = start.top + start.height / 2;
 
-    const y = cartRect.top + cartRect.height / 2
-        - (imageRect.top + imageRect.height / 2);
+    const endCenterX = target.left + target.width / 2;
+    const endCenterY = target.top + target.height / 2;
+
+    const x = endCenterX - startCenterX;
+    const y = endCenterY - startCenterY;
+
+    // Elevação proporcional para deixar o trajeto mais natural.
+    const arc = Math.min(100, Math.max(28, Math.abs(x) * 0.12));
 
     const animation = flyingImage.animate(
         [
             {
-                transform: "translate(0, 0) scale(1)",
-                opacity: 1
+                transform: "translate3d(0, 0, 0) scale(1)",
+                opacity: 1,
+                offset: 0
             },
             {
-                transform: `translate(${x * 0.45}px, ${y * 0.45 - 70}px) scale(0.65)`,
+                transform:
+                    `translate3d(${x * 0.5}px, ${y * 0.5 - arc}px, 0) scale(0.62)`,
                 opacity: 1,
                 offset: 0.55
             },
             {
-                transform: `translate(${x}px, ${y}px) scale(0.12)`,
-                opacity: 0.2
+                transform:
+                    `translate3d(${x}px, ${y}px, 0) scale(0.12)`,
+                opacity: 0,
+                offset: 1
             }
         ],
         {
-            duration: 700,
+            duration: 780,
             easing: "cubic-bezier(0.22, 1, 0.36, 1)",
             fill: "forwards"
         }
     );
 
-    animation.onfinish = () => {
-        flyingImage.remove();
-    };
+    animation.onfinish = () => flyingImage.remove();
+    animation.oncancel = () => flyingImage.remove();
 
+    // Pequena reação do carrinho.
     cartButton.classList.remove("cart-bounce");
-
-    // Reinicia a animação para cliques consecutivos.
     void cartButton.offsetWidth;
-
     cartButton.classList.add("cart-bounce");
 
     setTimeout(() => {
         cartButton.classList.remove("cart-bounce");
-    }, 450);
+    }, 500);
 }
 
 
