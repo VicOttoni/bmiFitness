@@ -7,8 +7,9 @@ margin-left: 10px;
    /* ANIMAÇÃO CARRINHO DE COMPRAS */
 
 
-.cart-bounce {
-    animation: cartBounce 0.45s ease;
+.cart-button.cart-bounce {
+    animation: cartBounce 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    transform-origin: center;
 }
 
 @keyframes cartBounce {
@@ -17,11 +18,11 @@ margin-left: 10px;
     }
 
     35% {
-        transform: scale(1.25);
+        transform: scale(1.16);
     }
 
     65% {
-        transform: scale(0.92);
+        transform: scale(0.96);
     }
 
     100% {
@@ -30,7 +31,7 @@ margin-left: 10px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .cart-bounce {
-        animation-duration: 0.01ms;
+    .cart-button.cart-bounce {
+        animation: none;
     }
 }
