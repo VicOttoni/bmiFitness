@@ -331,74 +331,104 @@ function saveCart() {
 // =====================================
 
 
+
 function animateProductToCart(sourceImage) {
     const cartButton = document.getElementById("cart-button");
 
     if (!sourceImage || !cartButton) return;
 
-    const imageRect = sourceImage.getBoundingClientRect();
-    const cartRect = cartButton.getBoundingClientRect();
+    // Calcula as posições atuais para funcionar em qualquer tela.
+    const start = sourceImage.getBoundingClientRect();
+    const target = cartButton.getBoundingClientRect();
 
-    const flyingImage = sourceImage.cloneNode(true);
+    if (!start.width || !start.height || !target.width || !target.height) {
+        return;
+    }
 
-    flyingImage.style.position = "fixed";
-    flyingImage.style.left = `${imageRect.left}px`;
-    flyingImage.style.top = `${imageRect.top}px`;
-    flyingImage.style.width = `${imageRect.width}px`;
-    flyingImage.style.height = `${imageRect.height}px`;
-    flyingImage.style.objectFit = "cover";
-    flyingImage.style.margin = "0";
-    flyingImage.style.zIndex = "99999";
-    flyingImage.style.pointerEvents = "none";
-    flyingImage.style.borderRadius = "8px";
-    flyingImage.style.transformOrigin = "center center";
+    const image = sourceImage.cloneNode(false);
 
-    document.body.appendChild(flyingImage);
+    const startX = start.left;
+    const startY = start.top;
 
-    const x = cartRect.left + cartRect.width / 2
-        - (imageRect.left + imageRect.width / 2);
+    const endX = target.left + target.width / 2 - 12;
+    const endY = target.top + target.height / 2 - 15;
 
-    const y = cartRect.top + cartRect.height / 2
-        - (imageRect.top + imageRect.height / 2);
+    const deltaX = endX - startX;
+    const deltaY = endY - startY;
 
-    const animation = flyingImage.animate(
-        [
-            {
-                transform: "translate(0, 0) scale(1)",
-                opacity: 1
-            },
-            {
-                transform: `translate(${x * 0.45}px, ${y * 0.45 - 70}px) scale(0.65)`,
-                opacity: 1,
-                offset: 0.55
-            },
-            {
-                transform: `translate(${x}px, ${y}px) scale(0.12)`,
-                opacity: 0.2
-            }
-        ],
+    // Cria uma curva suave, sem coordenadas fixas.
+    const middleX = startX + deltaX * 0.52;
+    const middleY = startY + deltaY * 0.52
+        - Math.min(100, Math.abs(deltaX) * 0.12 + 35);
+
+    Object.assign(image.style, {
+        position: "fixed",
+        left: `${startX}px`,
+        top: `${startY}px`,
+        width: `${start.width}px`,
+        height: `${start.height}px`,
+        maxWidth: "none",
+        objectFit: "cover",
+        margin: "0",
+        zIndex: "99999",
+        pointerEvents: "none",
+        borderRadius: "12px",
+        boxShadow: "0 12px 35px rgba(0,0,0,0.18)",
+        transformOrigin: "center center",
+        willChange: "left, top, width, height, opacity"
+    });
+
+    document.body.appendChild(image);
+
+    const animation = image.animate([
         {
-            duration: 700,
-            easing: "cubic-bezier(0.22, 1, 0.36, 1)",
-            fill: "forwards"
+            left: `${startX}px`,
+            top: `${startY}px`,
+            width: `${start.width}px`,
+            height: `${start.height}px`,
+            opacity: 1,
+            borderRadius: "12px",
+            offset: 0
+        },
+        {
+            left: `${middleX}px`,
+            top: `${middleY}px`,
+            width: `${Math.max(60, start.width * 0.55)}px`,
+            height: `${Math.max(75, start.height * 0.55)}px`,
+            opacity: 1,
+            borderRadius: "16px",
+            offset: 0.55
+        },
+        {
+            left: `${endX}px`,
+            top: `${endY}px`,
+            width: "24px",
+            height: "30px",
+            opacity: 0.15,
+            borderRadius: "50%",
+            offset: 1
         }
-    );
+    ], {
+        duration: 850,
+        easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+        fill: "forwards"
+    });
 
     animation.onfinish = () => {
-        flyingImage.remove();
+        image.remove();
+
+        cartButton.classList.remove("cart-bounce");
+        void cartButton.offsetWidth;
+        cartButton.classList.add("cart-bounce");
+
+        setTimeout(() => {
+            cartButton.classList.remove("cart-bounce");
+        }, 550);
     };
 
-    cartButton.classList.remove("cart-bounce");
-
-    // Reinicia a animação para cliques consecutivos.
-    void cartButton.offsetWidth;
-
-    cartButton.classList.add("cart-bounce");
-
-    setTimeout(() => {
-        cartButton.classList.remove("cart-bounce");
-    }, 450);
+    animation.oncancel = () => image.remove();
 }
+
 
 
 
@@ -1146,8 +1176,17 @@ function loadProductPage() {
                 
             }
 
-            animateProductToCart(mainImage);
-            addToCart(product, selectedSize);
+            
+addProductPageButton.addEventListener("click", function() {
+    if (!selectedSize) {
+        alert("Selecione um tamanho antes de adicionar ao carrinho.");
+        return;
+    }
+
+    animateProductToCart(mainImage);
+    addToCart(product, selectedSize);
+});
+
 
         }
     );
