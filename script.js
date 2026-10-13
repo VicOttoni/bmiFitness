@@ -332,6 +332,7 @@ function saveCart() {
 
 
 
+
 function animateProductToCart(sourceImage) {
     const cartButton = document.getElementById("cart-button");
 
@@ -428,8 +429,6 @@ function animateProductToCart(sourceImage) {
 
     animation.oncancel = () => image.remove();
 }
-
-
 
 
 // =====================================
@@ -1164,19 +1163,7 @@ function loadProductPage() {
         );
 
 
-    addProductPageButton.addEventListener(
-        "click",
-        function() {
 
-            if(!selectedSize) {
-
-                alert("Selecione um tamanho antes de adicionar ao carrinho.");
-
-                return;
-                
-            }
-
-            
 addProductPageButton.addEventListener("click", function() {
     if (!selectedSize) {
         alert("Selecione um tamanho antes de adicionar ao carrinho.");
@@ -1186,6 +1173,7 @@ addProductPageButton.addEventListener("click", function() {
     animateProductToCart(mainImage);
     addToCart(product, selectedSize);
 });
+
 
 
         }
